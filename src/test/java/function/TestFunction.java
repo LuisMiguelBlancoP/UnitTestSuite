@@ -8,7 +8,7 @@ class TestFunction {
 
 	@Test
 	void test() {
-		//default fail test
+		// default fail test
 		assertTrue(true);
 	}
 
