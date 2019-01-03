@@ -194,11 +194,10 @@ class TestOptional {
 		Optional<Car> optCar = opt1.map(value -> Optional.of(new Car(new Motor(value))))
 				.orElseGet(() -> Optional.of(new Car(new Motor(DEFAULT_TEXT))));
 		// get the serial of the Optional car created by the map
-		String serial = optCar.flatMap(value -> value.getMotor().flatMap(value2 -> value2.getSerial())).orElse(DEFAULT_TEXT);
+		String serial = optCar.flatMap(Car::getMotor).flatMap(Motor::getSerial).orElse(DEFAULT_TEXT);
 
 		// create a String given an Optional Car, but optional is empty
-		String notSerial = emptyOpt1.flatMap(value -> value.getMotor().flatMap(value2 -> value2.getSerial()))
-				.orElse(DEFAULT_TEXT);
+		String notSerial = emptyOpt1.flatMap(Car::getMotor).flatMap(Motor::getSerial).orElse(DEFAULT_TEXT);
 
 		assertAll(() -> assertEquals(TEST_TEXT, serial), () -> assertEquals(DEFAULT_TEXT, notSerial));
 
