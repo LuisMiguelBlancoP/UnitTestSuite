@@ -130,4 +130,13 @@ class TestStream {
 		assertThrows(IllegalArgumentException.class, () -> intStreamSupplier.get().skip(-2));
 	}
 
+	@Test
+	void peekTest() {
+		Stream<Integer> intStream = Stream.of(1, 2, 3, 4, 5, 6);
+		StringBuilder sb = new StringBuilder();
+
+		intStream.peek(value -> sb.append(value)).count();
+		assertEquals("123456", sb.toString());
+	}
+
 }
