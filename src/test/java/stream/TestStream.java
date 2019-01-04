@@ -138,5 +138,15 @@ class TestStream {
 		intStream.peek(value -> sb.append(value)).count();
 		assertEquals("123456", sb.toString());
 	}
+	
+	@Test
+	void distinctTest() {
+		Stream<Integer> intStream = Stream.of(1, 2, 2, 3, 3, 3);
+		StringBuilder sb = new StringBuilder();
+
+		//delete duplicated values
+		intStream.distinct().forEach(value -> sb.append(value));
+		assertEquals("123", sb.toString());
+	}
 
 }
