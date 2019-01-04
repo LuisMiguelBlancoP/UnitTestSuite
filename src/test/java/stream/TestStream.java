@@ -167,4 +167,12 @@ class TestStream {
 		assertArrayEquals(employees.toArray(), new String[] { "Luis", "Jhon", "Carlos", "Sergio", "Fernando" });
 	}
 
+	@Test
+	void reduceTest() {
+		Stream<Integer> intStream = Stream.of(1, 2, 6, 7, 3, 4, 5, 8, 9);
+		int major = intStream.reduce((a, b) -> a > b ? a : b).orElse(0);
+
+		assertEquals(9, major);
+	}
+
 }
