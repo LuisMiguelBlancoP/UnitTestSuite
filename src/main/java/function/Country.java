@@ -16,7 +16,7 @@ public class Country {
 	}
 
 	public void setName(String name) {
-		this.name =Optional.ofNullable(name);
+		this.name = Optional.ofNullable(name);
 	}
 
 	private Optional<Boolean> sea;

@@ -170,8 +170,12 @@ class TestFunction {
 		assertEquals(4, productResult.longValue());
 
 		// find the max value
-		BinaryOperator<Integer> bi = BinaryOperator.maxBy(Comparator.naturalOrder());
-		assertEquals(8, bi.apply(2, 8).intValue());
+		BinaryOperator<Integer> maxValue = BinaryOperator.maxBy(Comparator.naturalOrder());
+		assertEquals(8, maxValue.apply(2, 8).intValue());
+
+		// find the min value
+		BinaryOperator<Integer> minValue = BinaryOperator.minBy(Comparator.naturalOrder());
+		assertEquals(2, minValue.apply(2, 8).intValue());
 
 		// maxBy function throws an exception when the given comparator is null
 		assertThrows(NullPointerException.class, () -> {
