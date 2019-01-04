@@ -1,5 +1,6 @@
 package stream;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -7,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -138,15 +140,31 @@ class TestStream {
 		intStream.peek(value -> sb.append(value)).count();
 		assertEquals("123456", sb.toString());
 	}
-	
+
 	@Test
 	void distinctTest() {
 		Stream<Integer> intStream = Stream.of(1, 2, 2, 3, 3, 3);
 		StringBuilder sb = new StringBuilder();
 
-		//delete duplicated values
+		// delete duplicated values
 		intStream.distinct().forEach(value -> sb.append(value));
 		assertEquals("123", sb.toString());
+	}
+
+	@Test
+	void mapAndFlatMapTest() {
+		Supplier<Stream<String>> stream = () -> Stream.of("1", "2", "3", "4", "5", "6");
+		Stream<Company> companies = Stream.of(new Company(new String[] { "Luis", "Jhon" }),
+				new Company(new String[] { "Carlos", "Sergio" }), new Company(new String[] { "Fernando" }));
+
+		IntStream numbers = stream.get().mapToInt(Integer::parseInt);
+		assertArrayEquals(numbers.toArray(), new int[] { 1, 2, 3, 4, 5, 6 });
+
+		Stream<String> words = stream.get().map(v -> "N° ".concat(v));
+		assertArrayEquals(words.toArray(), new String[] { "N° 1", "N° 2", "N° 3", "N° 4", "N° 5", "N° 6" });
+
+		Stream<String> employees = companies.flatMap(company -> company.getEmployees());
+		assertArrayEquals(employees.toArray(), new String[] { "Luis", "Jhon", "Carlos", "Sergio", "Fernando" });
 	}
 
 }
